@@ -13,6 +13,13 @@
 (function () {
     "use strict";
 
+    var firstName;
+    var lastName;
+    var email;
+    var contactNumber;
+    var yourMessage;
+
+
     /**
      * This function uses the document.title to switch javascript function 
      * when the page switches
@@ -133,11 +140,16 @@
     * @returns {void}
     */
     function Contact() {
-        var contactNumber = document.getElementById("contactNumber");
+        // create a reference for your form
+        var contactForm = document.getElementById("contactForm");
+        firstName = document.getElementById("firstName");
+        lastName = document.getElementById("lastName");
+        email = document.getElementById("email");
+        contactNumber = document.getElementById("contactNumber");
+        yourMessage = document.getElementById("yourMessage");
 
-        contactNumber.addEventListener("blur", function(){
-            console.log(contactNumber.value.length);
-        });
+        contactForm.addEventListener("submit", onFormSubmit);
+        
     }
 
     /**
@@ -148,6 +160,66 @@
     */
     function Projects() {
         InitialText();
+    }
+
+    // CALLBACK (EVENT HANDLER) functions ++++++++++++++++++++++++++
+
+    /**
+     * callback / event handler for the contactForm submit event
+     * 
+     * @method onFormSubmit
+     * @returns {void}
+     */
+    function onFormSubmit(event){
+            console.info("entered onFormSubmit event");
+
+            // stops the form from clearing and trying to submit
+            event.preventDefault();
+            // displays the forms values to the console
+            displayFormValues();
+            // reset the form
+            contactForm.reset();
+    }
+
+    /**
+     * displays form values on the page and console
+     * 
+     * @method displayFormValues
+     * @returns {void}
+     */
+    function displayFormValues() {
+        var column = document.getElementById("column");
+        var formValues = document.createElement("div");
+        formValues.setAttribute("id","formValues");
+
+        var formValuesString = "";
+        formValuesString += "<p><hr><br>";
+        formValuesString += "First Name: " + firstName.value + "<br>";
+        formValuesString += "Last Name: " + lastName.value + "<br>";
+        formValuesString += "Email: " + email.value + "<br>";
+        formValuesString += "Contact Number: " + contactNumber.value + "<br>";
+        formValuesString += "Your Message: " + yourMessage.value + "<br>";
+        formValuesString += "<hr><br></p>";
+
+        formValues.innerHTML = formValuesString;
+
+        if(document.getElementById("formValues")) {
+            var formValuesDiv = document.getElementById("formValues");
+            formValuesDiv.innerHTML = formValuesString;
+        }
+        else {
+            column.appendChild(formValues);
+        }
+        
+
+
+        console.log("++++++++++++++++++++++++++++++++++++++++++");
+        console.log("First Name: " + firstName.value);
+        console.log("Last Name: " + lastName.value);
+        console.log("Email: " + email.value);
+        console.log("Contact Number: " + contactNumber.value);
+        console.log("Your Message: " + yourMessage.value);
+        console.log("++++++++++++++++++++++++++++++++++++++++++");
     }
 
 
